@@ -485,9 +485,12 @@ public class CodePush extends CordovaPlugin {
     }
 
     private void handleUnconfirmedInstall(boolean navigate) {
+        Utilities.logMessage("handleUnconfirmedInstall");
         if (this.codePushPackageManager.installNeedsConfirmation()) {
             /* save status for later reporting */
+            Utilities.logMessage("this.codePushPackageManager.installNeedsConfirmation()");
             CodePushPackageMetadata currentMetadata = this.codePushPackageManager.getCurrentPackageMetadata();
+            Utilities.logMessage("currentMetadata: " + currentMetadata);
             rollbackStatusReport = new StatusReport(ReportingStatus.UPDATE_ROLLED_BACK, currentMetadata.label, currentMetadata.appVersion, currentMetadata.deploymentKey);
 
             /* revert application to the previous version */
@@ -605,12 +608,14 @@ public class CodePush extends CordovaPlugin {
     @Override
     public void onStart() {
         clearDeploymentsIfBinaryUpdated();
+        Utilities.logMessage("onStart: didStartApp: " + didStartApp);
         if (!didStartApp) {
+            Utilities.logMessage("onStart 1");
             /* The application was just started. */
             didStartApp = true;
             InstallOptions pendingInstall = this.codePushPackageManager.getPendingInstall();
-
             /* Revert to the previous version if the install is not confirmed and no update is pending. */
+            Utilities.logMessage("onStart: pendingInstall: " + pendingInstall);
             if (pendingInstall == null) {
                 handleUnconfirmedInstall(false);
             }
@@ -618,10 +623,12 @@ public class CodePush extends CordovaPlugin {
             navigateToLocalDeploymentIfExists();
             /* Handle ON_NEXT_RESUME and ON_NEXT_RESTART pending installations */
             if (pendingInstall != null && (InstallMode.ON_NEXT_RESUME.equals(pendingInstall.installMode) || InstallMode.ON_NEXT_RESTART.equals(pendingInstall.installMode))) {
+                Utilities.logMessage("onStart: [place onStart1] ");
                 this.markUpdate();
                 this.codePushPackageManager.clearPendingInstall();
             }
         } else {
+            Utilities.logMessage("onStart 2");
             /* The application was resumed from the background. */
             /* Handle ON_NEXT_RESUME pending installations. */
             InstallOptions pendingInstall = this.codePushPackageManager.getPendingInstall();

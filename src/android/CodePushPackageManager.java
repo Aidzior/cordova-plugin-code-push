@@ -24,6 +24,7 @@ public class CodePushPackageManager {
     }
 
     public void revertToPreviousVersion() {
+        Utilities.logMessage("revertToPreviousVersion");
         /* delete the failed update package */
         CodePushPackageMetadata failedUpdateMetadata = this.getCurrentPackageMetadata();
         if (failedUpdateMetadata != null) {
