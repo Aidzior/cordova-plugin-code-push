@@ -391,8 +391,9 @@ public class CodePush extends CordovaPlugin {
         /* check if we have a deployed package already */
         Utilities.logMessage("clearDeploymentsIfBinaryUpdated ");
         CodePushPackageMetadata deployedPackageMetadata = this.codePushPackageManager.getCurrentPackageMetadata();
-        Utilities.logMessage("clearDeploymentsIfBinaryUpdated deployedPackageMetadata: " + deployedPackageMetadata.toString());
+        Utilities.logMessage("clearDeploymentsIfBinaryUpdated deployedPackageMetadata: " + deployedPackageMetadata);
         if (deployedPackageMetadata != null) {
+            Utilities.logMessage("clearDeploymentsIfBinaryUpdated deployedPackageMetadata: " + deployedPackageMetadata.toString());
             Utilities.logMessage("clearDeploymentsIfBinaryUpdated 1");
 
             String deployedPackageTimeStamp = deployedPackageMetadata.nativeBuildTime;
@@ -626,7 +627,7 @@ public class CodePush extends CordovaPlugin {
             didStartApp = true;
             InstallOptions pendingInstall = this.codePushPackageManager.getPendingInstall();
             /* Revert to the previous version if the install is not confirmed and no update is pending. */
-            Utilities.logMessage("onStart: pendingInstall: " + pendingInstall.toString());
+            Utilities.logMessage("onStart: pendingInstall: " + pendingInstall);
             if (pendingInstall == null) {
                 handleUnconfirmedInstall(false);
             }
