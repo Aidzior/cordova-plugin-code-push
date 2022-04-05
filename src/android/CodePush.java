@@ -389,21 +389,32 @@ public class CodePush extends CordovaPlugin {
 
     private void clearDeploymentsIfBinaryUpdated() {
         /* check if we have a deployed package already */
+        Utilities.logMessage("clearDeploymentsIfBinaryUpdated ");
         CodePushPackageMetadata deployedPackageMetadata = this.codePushPackageManager.getCurrentPackageMetadata();
+        Utilities.logMessage("clearDeploymentsIfBinaryUpdated deployedPackageMetadata: " + deployedPackageMetadata.toString());
         if (deployedPackageMetadata != null) {
+            Utilities.logMessage("clearDeploymentsIfBinaryUpdated 1");
+
             String deployedPackageTimeStamp = deployedPackageMetadata.nativeBuildTime;
             long nativeBuildTime = Utilities.getApkBuildTime(this.cordova.getActivity());
+            Utilities.logMessage("clearDeploymentsIfBinaryUpdated nativeBuildTime: " + nativeBuildTime);
 
             String deployedPackageVersion = deployedPackageMetadata.appVersion;
+            Utilities.logMessage("clearDeploymentsIfBinaryUpdated deployedPackageVersion: " + deployedPackageVersion);
+
             String applicationVersion = null;
             try {
                 applicationVersion = Utilities.getAppVersionName(this.cordova.getActivity());
+                Utilities.logMessage("clearDeploymentsIfBinaryUpdated applicationVersion: " + applicationVersion);
+
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
 
             if (nativeBuildTime != -1 && applicationVersion != null) {
                 String currentAppTimeStamp = String.valueOf(nativeBuildTime);
+                Utilities.logMessage("clearDeploymentsIfBinaryUpdated currentAppTimeStamp: " + currentAppTimeStamp);
+
                 if (!currentAppTimeStamp.equals(deployedPackageTimeStamp) ||
                         !(applicationVersion.equals(deployedPackageVersion))) {
                     this.codePushPackageManager.cleanDeployments();
@@ -615,7 +626,7 @@ public class CodePush extends CordovaPlugin {
             didStartApp = true;
             InstallOptions pendingInstall = this.codePushPackageManager.getPendingInstall();
             /* Revert to the previous version if the install is not confirmed and no update is pending. */
-            Utilities.logMessage("onStart: pendingInstall: " + pendingInstall);
+            Utilities.logMessage("onStart: pendingInstall: " + pendingInstall.toString());
             if (pendingInstall == null) {
                 handleUnconfirmedInstall(false);
             }
