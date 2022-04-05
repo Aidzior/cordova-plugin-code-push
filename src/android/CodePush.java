@@ -418,8 +418,8 @@ public class CodePush extends CordovaPlugin {
                 String currentAppTimeStamp = String.valueOf(nativeBuildTime);
                 Utilities.logMessage("clearDeploymentsIfBinaryUpdated currentAppTimeStamp: " + currentAppTimeStamp);
 
-                if (!currentAppTimeStamp.equals(deployedPackageTimeStamp) ||
-                        !(applicationVersion.equals(deployedPackageVersion))) {
+               // if (!currentAppTimeStamp.equals(deployedPackageTimeStamp) ||
+               //         !(applicationVersion.equals(deployedPackageVersion))) {
                     Utilities.logMessage("clearDeploymentsIfBinaryUpdated jestem du!: ");
 
                     this.codePushPackageManager.cleanDeployments();
@@ -427,7 +427,7 @@ public class CodePush extends CordovaPlugin {
                     this.codePushPackageManager.clearPendingInstall();
                     this.codePushPackageManager.clearInstallNeedsConfirmation();
                     this.codePushPackageManager.clearBinaryFirstRunFlag();
-                }
+              //  }
             }
         }
     }
