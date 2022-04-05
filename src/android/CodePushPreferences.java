@@ -140,7 +140,7 @@ public class CodePushPreferences {
 
     public void clearPreferences(String preferencesId) {
         SharedPreferences preferences = context.getSharedPreferences(preferencesId, Context.MODE_PRIVATE);
-        Shared editor = preferences.edit();
+        SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.commit();
     }
