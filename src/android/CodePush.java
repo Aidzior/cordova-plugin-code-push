@@ -417,9 +417,13 @@ public class CodePush extends CordovaPlugin {
             if (nativeBuildTime != -1 && applicationVersion != null) {
                 String currentAppTimeStamp = String.valueOf(nativeBuildTime);
                 Utilities.logMessage("clearDeploymentsIfBinaryUpdated currentAppTimeStamp: " + currentAppTimeStamp);
+                Utilities.logMessage("clearDeploymentsIfBinaryUpdated deployedPackageTimeStamp: " + deployedPackageTimeStamp);
 
-               // if (!currentAppTimeStamp.equals(deployedPackageTimeStamp) ||
-               //         !(applicationVersion.equals(deployedPackageVersion))) {
+                Utilities.logMessage("clearDeploymentsIfBinaryUpdated applicationVersion: " + applicationVersion);
+                Utilities.logMessage("clearDeploymentsIfBinaryUpdated deployedPackageVersion: " + deployedPackageVersion);
+
+                if (!currentAppTimeStamp.equals(deployedPackageTimeStamp) ||
+                        !(applicationVersion.equals(deployedPackageVersion))) {
                     Utilities.logMessage("clearDeploymentsIfBinaryUpdated jestem du!: ");
 
                     this.codePushPackageManager.cleanDeployments();
@@ -427,7 +431,7 @@ public class CodePush extends CordovaPlugin {
                     this.codePushPackageManager.clearPendingInstall();
                     this.codePushPackageManager.clearInstallNeedsConfirmation();
                     this.codePushPackageManager.clearBinaryFirstRunFlag();
-              //  }
+                }
             }
         }
     }
@@ -633,7 +637,7 @@ public class CodePush extends CordovaPlugin {
             /* Revert to the previous version if the install is not confirmed and no update is pending. */
             Utilities.logMessage("onStart: pendingInstall: " + pendingInstall);
             if (pendingInstall == null) {
-                handleUnconfirmedInstall(false);
+              //  handleUnconfirmedInstall(false);
             }
 
             navigateToLocalDeploymentIfExists();
