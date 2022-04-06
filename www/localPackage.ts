@@ -194,26 +194,35 @@ class LocalPackage extends Package implements ILocalPackage {
     }
 
     private finishInstall(deployDir: DirectoryEntry, installOptions: InstallOptions, installSuccess: SuccessCallback<InstallMode>, installError: ErrorCallback): void {
+        CodePushUtil.logMessage("[finishInstall]");
         function backupPackageInformationFileIfNeeded(backupIfNeededDone: Callback<void>) {
+            CodePushUtil.logMessage("[finishInstall]  -  1");
             NativeAppInfo.isPendingUpdate((pendingUpdate: boolean) => {
+                CodePushUtil.logMessage("[finishInstall]  -  2");
                 if (pendingUpdate) {
+                    CodePushUtil.logMessage("[finishInstall]  -  3");
                     // Don't back up the  currently installed update since it hasn't been "confirmed"
                     backupIfNeededDone(null, null);
                 } else {
+                    CodePushUtil.logMessage("[finishInstall]  -  4");
                     LocalPackage.backupPackageInformationFile(backupIfNeededDone);
                 }
             });
         }
 
         LocalPackage.getCurrentOrDefaultPackage((oldPackage: LocalPackage) => {
+            CodePushUtil.logMessage("[finishInstall]  -  5");
             backupPackageInformationFileIfNeeded((backupError: Error) => {
+                CodePushUtil.logMessage("[finishInstall]  -  6");
                 /* continue on error, current package information is missing if this is the first update */
                 this.writeNewPackageMetadata(deployDir, (writeMetadataError: Error) => {
+                    CodePushUtil.logMessage("[finishInstall]  -  7    - error: " + writeMetadataError);
                     if (writeMetadataError) {
                         installError && installError(writeMetadataError);
                     } else {
+                        CodePushUtil.logMessage("[finishInstall]  -  8");
                         var invokeSuccessAndInstall = () => {
-                            CodePushUtil.logMessage("Install succeeded.");
+                            CodePushUtil.logMessage("[finishInstall] Install succeeded.");
                             var installModeToUse: InstallMode = this.isMandatory ? installOptions.mandatoryInstallMode : installOptions.installMode;
                             if (installModeToUse === InstallMode.IMMEDIATE) {
                                 /* invoke success before navigating */

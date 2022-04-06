@@ -637,7 +637,7 @@ public class CodePush extends CordovaPlugin {
             /* Revert to the previous version if the install is not confirmed and no update is pending. */
             Utilities.logMessage("onStart: pendingInstall: " + pendingInstall);
             if (pendingInstall == null) {
-              //  handleUnconfirmedInstall(false);
+                handleUnconfirmedInstall(false);
             }
 
             navigateToLocalDeploymentIfExists();
