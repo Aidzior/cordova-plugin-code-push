@@ -422,8 +422,8 @@ public class CodePush extends CordovaPlugin {
                 Utilities.logMessage("clearDeploymentsIfBinaryUpdated applicationVersion: " + applicationVersion);
                 Utilities.logMessage("clearDeploymentsIfBinaryUpdated deployedPackageVersion: " + deployedPackageVersion);
 
-                if (!currentAppTimeStamp.equals(deployedPackageTimeStamp) ||
-                        !(applicationVersion.equals(deployedPackageVersion))) {
+       //         if (!currentAppTimeStamp.equals(deployedPackageTimeStamp) ||
+       //                 !(applicationVersion.equals(deployedPackageVersion))) {
                     Utilities.logMessage("clearDeploymentsIfBinaryUpdated jestem du!: ");
 
                     this.codePushPackageManager.cleanDeployments();
@@ -431,7 +431,7 @@ public class CodePush extends CordovaPlugin {
                     this.codePushPackageManager.clearPendingInstall();
                     this.codePushPackageManager.clearInstallNeedsConfirmation();
                     this.codePushPackageManager.clearBinaryFirstRunFlag();
-                }
+        //        }
             }
         }
     }
@@ -627,9 +627,10 @@ public class CodePush extends CordovaPlugin {
      */
     @Override
     public void onStart() {
-        clearDeploymentsIfBinaryUpdated();
+
         Utilities.logMessage("onStart: didStartApp: " + didStartApp);
         if (!didStartApp) {
+            clearDeploymentsIfBinaryUpdated();
             Utilities.logMessage("onStart 1");
             /* The application was just started. */
             didStartApp = true;
