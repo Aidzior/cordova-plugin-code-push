@@ -257,6 +257,7 @@ public class CodePush extends CordovaPlugin {
     }
 
     private boolean execIsFirstRun(CordovaArgs args, CallbackContext callbackContext) {
+
         try {
             boolean isFirstRun = false;
             String packageHash = args.getString(0);
@@ -628,6 +629,8 @@ public class CodePush extends CordovaPlugin {
     @Override
     public void onStart() {
         clearDeploymentsIfBinaryUpdated();
+        boolean isFirstRun = this.codePushPackageManager.isBinaryFirstRun();
+        Utilities.logMessage("isFirstRun " + didStartApp);
         Utilities.logMessage("onStart: didStartApp: " + didStartApp);
         if (!didStartApp) {
             Utilities.logMessage("onStart 1");
@@ -637,7 +640,7 @@ public class CodePush extends CordovaPlugin {
             /* Revert to the previous version if the install is not confirmed and no update is pending. */
             Utilities.logMessage("onStart: pendingInstall: " + pendingInstall);
             if (pendingInstall == null) {
-              //  handleUnconfirmedInstall(false);
+                handleUnconfirmedInstall(false);
             }
 
             navigateToLocalDeploymentIfExists();
